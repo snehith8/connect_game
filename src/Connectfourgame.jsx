@@ -8,6 +8,7 @@ var player1score=0;
 var player2score=0;
 var gamesplayed=0;
 var roundlooser=null;
+var roundwinner=null;
 
 const ConnectFourGame = () => {
   const location=useLocation();
@@ -51,9 +52,11 @@ const ConnectFourGame = () => {
     if (checkForWin(newGrid, row, col) ) { 
       if (currentPlayer === player1Name) {
          player1score=player1score+1;
+         roundwinner=player1Name;
          roundlooser=player2Name;
       } else {
          player2score=player2score+1;
+         roundwinner=player2Name;
          roundlooser=player1Name;
       }
        setRoundResults([...roundResults, `Round ${gamesplayed + 1}: ${currentPlayer} wins!`]);
@@ -68,6 +71,7 @@ const ConnectFourGame = () => {
         `Round ${gamesplayed + 1}: It's a Draw!`,
       ]);
       resetGame(gamesplayed + 1);
+      setUndoDisabled(false);
     }
     else {
       setCurrentPlayer(currentPlayer === player1Name ? player2Name : player1Name);
@@ -126,7 +130,7 @@ const ConnectFourGame = () => {
              setCurrentPlayer(player2Name);
               break;
           case "Winner1st": 
-              setCurrentPlayer(winner);
+              setCurrentPlayer(roundwinner);
               break;
           case "Looser1st": 
              setCurrentPlayer(roundlooser);
