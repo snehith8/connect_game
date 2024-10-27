@@ -1,0 +1,413 @@
+/* Homescreen */  
+.connect-four {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #ffffff;
+  width: 350%;
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Align items to center */
+  justify-content: center; /* Vertically center */
+  height: 100vh; /* Full viewport height to avoid scrolling */
+  box-sizing: border-box;
+}
+/* Style for the main title */
+.connect-four h1 {
+  font-size: 36px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Style for the subtitle */
+.connect-four p {
+  font-size: 18px;
+  color: #555;
+}
+.buttons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 equal columns */
+  grid-template-rows: 1fr 1fr; /* 2 equal rows */
+  grid-gap: 9px; /* Space between the boxes */
+  width: 100%;
+}
+
+.buttons-grid .p-button {
+  width: 100%; /* Full width for the button */
+  height: 50px; /* Uniform height for each button */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; /* Ensure child elements position correctly */
+  font-size: small;
+}
+
+.button-content {
+  display: flex;
+  flex-direction: row; /* Arrange icon and label vertically */
+  align-items: center; /* Center align items */
+  width: 100%;
+}
+
+.coming-soon {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: #28a745;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.grid-link {
+  text-decoration: none;
+  display: flex;
+  width: 100%;
+}
+
+.connect-four img {
+  width: 400px;
+  height: auto;
+  margin-bottom: 20px;
+  max-width: 100%;
+}
+ /* Gamesetting */
+.game-container {
+  background-color: #ffffff;
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Header */
+.header {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Player Section */
+.game-info-1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background-color:lightgreen;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+.game-info-2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: peachpuff;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+.game-info-3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: violet;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+.game-info-4 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: greenyellow;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+.player-info {
+  cursor: pointer;
+  text-align: center;
+}
+
+.avatar {
+  width: 50px; /* Set a fixed width for the avatar */
+  height: 50px; /* Set a fixed height for the avatar */
+  border-radius: 50%; /* Make it circular */
+  cursor: pointer; /* Change cursor on hover */
+  object-fit: cover;
+  display: flex; /* Align contents centrally */
+  align-items: center; /* Vertical center */
+  overflow: hidden;
+  border: 2px solid #ddd;
+  justify-content: center; /* Horizontal center */
+}
+
+.player1-uploaded {
+  background-color: #d1e7dd; /* Light green background for Player 1 uploaded photo */
+  border: 3px solid #198754; /* Green border */
+}
+
+.player1-default {
+  background-color: #f8d7da; /* Light red background for Player 1 default icon */
+  border: 3px solid #dc3545; /* Red border */
+}
+
+.player2-uploaded {
+  background-color: #cfe2ff; /* Light blue background for Player 2 uploaded photo */
+  border: 3px solid #0d6efd; /* Blue border */
+}
+
+.player2-default {
+  background-color: #fff3cd; /* Light yellow background for Player 2 default icon */
+  border: 3px solid #ffc107; /* Yellow border */
+}
+
+
+.player-details {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.player-details h3 {
+  margin: 5px;
+  font-size: 1.1em;
+  color: black;
+}
+
+.player-details p {
+  margin: 0;
+  font-size: 1em;
+}
+
+.icon {
+  font-size: 1.5em;
+  color: blue;  
+}
+
+/* Start Game Button */
+.start-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #4a4ab7;
+  color: white;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Dialog Styles */
+.p-dialog .p-dialog-header {
+  background-color: #4a4ab7;
+  color: white;
+  text-align: center;
+}
+
+.p-dialog-header-icon:hover {
+  color: white;
+  background-color: red;  /* Change color on hover to dark red */
+}
+.p-dialog .p-dialog-content {
+  padding: 20px;
+  text-align: left;
+  background-color: white;
+}
+
+.dilog{
+  width: 400px;
+  height: auto;
+}
+.button-container {
+  gap: 10px;
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center align buttons */
+  margin-top: 20px; /* Space above buttons */
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;     
+  padding: 10px;                
+  border-radius: 8px;           
+  background-color: #f9f9f9;    
+  margin: 10px 0;               
+  width: 100%;
+}
+
+.radio-item label {
+  margin-left: 10px;
+}
+
+/* Input Text */
+.p-inputtext {
+  width: auto;
+  padding: 8px;
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Game Board Styles */
+
+.game-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  color: #333;
+}
+
+.game-board h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+.game-board h2 {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  background-color: #0077cc;
+  border-radius: 9px;
+  padding: 9px;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  width: 50px;
+  height: 50px;
+  background-color: #ffffff;
+  border: 3px solid #0077cc;
+  border-radius: 50%;
+  margin: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.cell.empty {
+  background-color: white;
+  border: 1px solid #ccc; /* Optional: to visualize the grid better */
+}
+
+.cell.player1, .cell.player2 {
+  border-radius: 50%;
+}
+
+/* Scoreboard and Controls */
+/* Box for each player */
+.player-box-1 {
+  display: flex;
+  background-color: lightgreen;
+  padding: 20px;
+  border-radius: 10px;
+  width: auto;
+  text-align: center;
+  gap: 5px;
+  margin-bottom: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+.player-box-2 {
+  display: flex;
+  background-color: peachpuff;
+  padding: 20px;
+  border-radius: 10px;
+  width: auto;
+  text-align: center;
+  gap: 5px;
+  margin-bottom: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the avatar image */
+/* .avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+} */
+
+.score-card {
+    flex: 1;
+    height: 60%;
+    text-align: center;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.score-card h3 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.score-card p {
+    color: #555;
+    font-size: 1em;
+    margin: 5px 0;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #0074cc;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #005fa3;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+.highlight {
+  border: 5px solid orange; /* Adjust thickness and color as needed */
+  border-radius: 50%; /* Make it circular if using avatars */
+}
