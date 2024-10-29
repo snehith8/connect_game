@@ -135,7 +135,6 @@ const GameSetting = () => {
             <p>{tempNumberOfGames} Games</p>
          </div>
       </div>
-
       <div className="game-info-4" onClick={() => setShowStarterDialog(true)}>
          <div className="player-info" >
           <Avatar icon="pi pi-play icon" style={{ fontSize: '1.0rem' }} className="avatar" />
@@ -145,10 +144,7 @@ const GameSetting = () => {
          <p>{tempWhoStarts}</p>
         </div>
       </div>
-
-
       <Button label="Start Game" className="start-btn" onClick={startGame} />
-
       {/* Player 1 Dialog */}
       <Dialog
         header="Set Player 1 Name"
@@ -165,7 +161,6 @@ const GameSetting = () => {
         <br />
         <Button label="Set Name" onClick={() => setShowPlayer1Dialog(false)} />
       </Dialog>
-
       {/* Player 2 Dialog */}
       <Dialog  
         header="Set Player 2 Name"
@@ -181,7 +176,6 @@ const GameSetting = () => {
         /> <br />
         <Button label="Set Name" onClick={() => setShowPlayer2Dialog(false)} />
       </Dialog>
-
       {/* Number of Games Dialog */}
       <Dialog className='dilog'
         header="Select Number of Games"
@@ -210,8 +204,7 @@ const GameSetting = () => {
             setShowGamesDialog(false)
             }} className="cancel-button"/>
         </div>
-      </Dialog>
-      
+      </Dialog>      
       {/* Who Starts Dialog */}
       <Dialog className='dilog'
         header="Who Starts"

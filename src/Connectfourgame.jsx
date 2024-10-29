@@ -1,14 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './App.css';
 import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar } from 'primereact/avatar';
 const ROWS = 6;
 const COLS = 7;
-var player1score=0;
-var player2score=0;
-var gamesplayed=0;
-var roundlooser=null;
-var roundwinner=null;
 
 const ConnectFourGame = () => {
   const location=useLocation();
@@ -21,18 +16,30 @@ const ConnectFourGame = () => {
   const [history,setHistory]=useState([]);
   const [undoDisabled, setUndoDisabled] = useState(true);
   const [roundResults, setRoundResults] = useState([]); 
-  
+  const [player1score, setPlayer1Score] = useState(0);
+  const [player2score, setPlayer2Score] = useState(0);
+  const [gamesplayed, setGamesPlayed] = useState(0);
+  const [roundlooser,setRoundLooser]=useState(null);
+  const [tournamentcompleted,setTournamentCompleted]=useState(false);
+ 
+  useEffect(() => {
+    if (winner || grid.every(row => row.every(cell => cell !== null))) {
+      setTimeout(() => resetGame(gamesplayed + 1), 500);
+    }
+  }, [winner, grid]);
+
   const resetTournament = () => {
-    player1score = 0;
-    player2score = 0;
-    gamesplayed = 0;
-    roundlooser = null;
+    setPlayer1Score(0)
+    setPlayer2Score(0)
+    setGamesPlayed(0)
+    setRoundLooser(null);
     setGrid(Array(ROWS).fill(Array(COLS).fill(null)));
     setCurrentPlayer(initialPlayer); // Reset to initial player
     setWinner(null);
     setHistory([]);
     setRoundResults([]);
     setUndoDisabled(true);
+    setTournamentCompleted(false);
   };
   // Handle player click
   const handleClick = (row,col) => {
@@ -46,38 +53,33 @@ const ConnectFourGame = () => {
       colIndex === col ? currentPlayer : cell 
     ) : r
     );
-  
     setGrid(newGrid);
      // Check for win
     if (checkForWin(newGrid, row, col) ) { 
       if (currentPlayer === player1Name) {
-         player1score=player1score+1;
-         roundwinner=player1Name;
-         roundlooser=player2Name;
+        setPlayer1Score(player1score + 1);
+         setRoundLooser(player2Name);
       } else {
-         player2score=player2score+1;
-         roundwinner=player2Name;
-         roundlooser=player1Name;
+        setPlayer2Score(player2score + 1);
+        setRoundLooser(player1Name);
       }
        setRoundResults([...roundResults, `Round ${gamesplayed + 1}: ${currentPlayer} wins!`]);
-       setWinner(currentPlayer);
-       setTimeout(() => {
-        resetGame(gamesplayed + 1);
-      }, 500); 
+       setWinner(currentPlayer); 
     } 
     else if (newGrid.every(row => row.every(cell => cell != null))){
       setRoundResults((prevResults) => [
         ...prevResults,
         `Round ${gamesplayed + 1}: It's a Draw!`,
       ]);
-      resetGame(gamesplayed + 1);
-      setUndoDisabled(false);
+       resetGame(gamesplayed + 1);
+       setCurrentPlayer(currentPlayer);
     }
     else {
       setCurrentPlayer(currentPlayer === player1Name ? player2Name : player1Name);
       setUndoDisabled(false); 
     }
   };
+
   const checkForWin = (grid, row, col) => {
     return (
       checkDirection(grid, row, col, 1, 0) ||  // Horizontal
@@ -112,16 +114,16 @@ const ConnectFourGame = () => {
   };
 
   // Reset the game
-  const resetGame = (updatedgamesplayeded) => {
-    if (updatedgamesplayeded === totalgames) {
+  const resetGame = (gamecount) => {
+    if (gamecount === totalgames) {
       declareTournamentWinner();
     } else {
       setGrid(Array(ROWS).fill(Array(COLS).fill(null)));
       setWinner(null);
       setUndoDisabled(true);
       setHistory([]);
-      gamesplayed = updatedgamesplayeded;
-      if(updatedgamesplayeded < totalgames){
+      setGamesPlayed(gamecount);
+      if(gamecount < totalgames){
         switch (whostart){
           case player1Name: 
              setCurrentPlayer(player1Name); 
@@ -130,7 +132,7 @@ const ConnectFourGame = () => {
              setCurrentPlayer(player2Name);
               break;
           case "Winner1st": 
-              setCurrentPlayer(roundwinner);
+              setCurrentPlayer(winner);
               break;
           case "Looser1st": 
              setCurrentPlayer(roundlooser);
@@ -151,6 +153,7 @@ const ConnectFourGame = () => {
       finalResult = "Tournament Result: It's a tie!";
     }
     setRoundResults((prevResults) => [...prevResults, finalResult]);
+    setTournamentCompleted(true);
   };
   // Undo last move
   const undoMove = () => { 
@@ -215,8 +218,16 @@ const ConnectFourGame = () => {
         resetTournament();
         navigate("/")
         }}>End Tournament</button>
-       <br />
-       <button onClick={undoMove} disabled={undoDisabled || history.length === 0 || winner !=null} >Undo Move</button>
+       { !tournamentcompleted && (
+         <>
+            <button onClick={undoMove} 
+            disabled={undoDisabled || history.length === 0 || winner !=null
+            } >Undo Move</button>
+         </>
+        )}
+        {tournamentcompleted && (
+        <button onClick={resetTournament}>Play Again</button>
+        )}
         </div>
       </div>
   );
