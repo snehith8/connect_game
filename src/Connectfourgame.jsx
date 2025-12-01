@@ -22,12 +22,11 @@ const ConnectFourGame = () => {
   const [roundlooser,setRoundLooser]=useState(null);
   const [tournamentcompleted,setTournamentCompleted]=useState(false);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-
   useEffect(() => {
     if (winner || grid.every(row => row.every(cell => cell !== null))) {
       setTimeout(() => resetGame(gamesplayed + 1), 500);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [winner, grid]);
 
   const resetTournament = () => {
