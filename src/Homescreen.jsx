@@ -1,45 +1,100 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import 'primereact/resources/themes/saga-blue/theme.css'; // Choose a theme
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css'; 
-import { Button } from 'primereact/button';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Homescreen =()=> {
+const Homescreen = () => {
+  const navigate = useNavigate();
+  const [hasSavedMatch, setHasSavedMatch] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('c4_active_match_v1');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (!parsed.tournamentCompleted && parsed.grid) {
+          setHasSavedMatch(true);
+        }
+      } catch (e) {
+        setHasSavedMatch(false);
+      }
+    }
+  }, []);
+
+  const handleResumeGame = () => {
+    navigate('/Connectfourgame');
+  };
+
+  const handleStartAIGame = () => {
+    navigate('/Connectfourgame', {
+      state: {
+        player1Name: 'Player',
+        player1Photo: null,
+        player2Name: 'Cyber AI',
+        player2Photo: null,
+        totalgames: 3,
+        whostart: 'Player',
+        isAiMode: true,
+      },
+    });
+  };
+
   return (
-    <div className='connect-four'>
-      <h1><center>CONNECT FOUR!</center></h1>
-      <center><p>Play with other players around the world.</p></center>
-      <img 
-        src="/4C.jpeg" // Replace with your image path
-        alt="Connect Four Game" 
-        style={{ width: '400px', height: 'auto', display: 'block', margin: '0 auto' }} // Adjust styles as needed
-      />   
-      <div className='buttons-grid'>
-        <Button label="Three Players" icon="pi pi-user" className="coming-soon-btn">
-            <span className="button-content">
-               <span className="coming-soon">Coming Soon</span>
-            </span>
-        </Button>
-        <Link to="/Gamesetting" className="grid-link">
-          <Button label="Two Players" icon="pi pi-user-plus" className="button-content">
-            <span className="button-content">
-            </span>
-          </Button>
+    <div className="homescreen-card">
+      <div className="homescreen-header">
+        <h1 className="homescreen-title">CONNECT FOUR!</h1>
+        <p className="homescreen-subtitle">
+          Play with friends or test your skills online
+        </p>
+      </div>
+
+      {hasSavedMatch && (
+        <div className="resume-match-banner" onClick={handleResumeGame}>
+          <i className="pi pi-history"></i>
+          <span>Resume Ongoing Match</span>
+          <i className="pi pi-arrow-right"></i>
+        </div>
+      )}
+
+      <div className="preview-container">
+        <img
+          src="/4C.jpeg"
+          alt="Connect Four Game"
+          className="homescreen-img"
+          onError={(e) => {
+            e.target.style.display = 'none';
+          }}
+        />
+      </div>
+
+      <div className="game-modes-grid">
+        <Link to="/Gamesetting" className="mode-card play-card">
+          <i className="pi pi-user-plus mode-icon"></i>
+          <span className="mode-label">Two Players</span>
+          <span className="mode-tag active-tag">Ready</span>
         </Link>
-        <Button label="Custom Game" icon="pi pi-cog" className="coming-soon-btn">
-          <span className="button-content">
-            <span className="coming-soon">Coming Soon</span>
-          </span>
-        </Button>
-        <Button label="Training Game" icon="pi pi-book" className="coming-soon-btn">
-          <span className="button-content">
-            <span className="coming-soon">Coming Soon</span>
-          </span>
-        </Button>
-     </div>
+
+        <div
+          className="mode-card play-card ai-card"
+          onClick={handleStartAIGame}
+        >
+          <i className="pi pi-android mode-icon"></i>
+          <span className="mode-label">Training Game</span>
+          <span className="mode-tag active-tag">VS AI</span>
+        </div>
+
+        <div className="mode-card disabled-card">
+          <i className="pi pi-users mode-icon"></i>
+          <span className="mode-label">Three Players</span>
+          <span className="mode-tag">Soon</span>
+        </div>
+
+        <div className="mode-card disabled-card">
+          <i className="pi pi-cog mode-icon"></i>
+          <span className="mode-label">Custom Game</span>
+          <span className="mode-tag">Soon</span>
+        </div>
+      </div>
     </div>
-  )
+  );
 };
 
 export default Homescreen;
